@@ -1,10 +1,8 @@
 package com.transporte.transporte.ventas.models;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import com.transporte.transporte.Vehiculos.models.Vehiculo;
+import jakarta.persistence.*;
+import java.util.Date;
 import java.util.UUID;
 
 @Entity
@@ -15,14 +13,23 @@ public class Salida {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID id;
 
-    private String origen;
-    private String destino;
+    @ManyToOne
+    @JoinColumn(name = "vehiculo_id", nullable = false)
+    private Vehiculo vehiculo;
+
+    @ManyToOne
+    @JoinColumn(name = "ruta_id", nullable = false)
+    private Ruta ruta;
+
+    @Column(nullable = false)
+    private Date fecha;
 
     public Salida() {}
 
-    public Salida(String origen, String destino) {
-        this.origen = origen;
-        this.destino = destino;
+    public Salida(Vehiculo vehiculo, Ruta ruta, Date fecha) {
+        this.vehiculo = vehiculo;
+        this.ruta = ruta;
+        this.fecha = fecha;
     }
 
     public UUID getId() {
@@ -33,19 +40,27 @@ public class Salida {
         this.id = id;
     }
 
-    public String getOrigen() {
-        return origen;
+    public Vehiculo getVehiculo() {
+        return vehiculo;
     }
 
-    public void setOrigen(String origen) {
-        this.origen = origen;
+    public void setVehiculo(Vehiculo vehiculo) {
+        this.vehiculo = vehiculo;
     }
 
-    public String getDestino() {
-        return destino;
+    public Ruta getRuta() {
+        return ruta;
     }
 
-    public void setDestino(String destino) {
-        this.destino = destino;
+    public void setRuta(Ruta ruta) {
+        this.ruta = ruta;
+    }
+
+    public Date getFecha() {
+        return fecha;
+    }
+
+    public void setFecha(Date fecha) {
+        this.fecha = fecha;
     }
 }

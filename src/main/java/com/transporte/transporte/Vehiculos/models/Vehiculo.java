@@ -18,8 +18,10 @@ public class Vehiculo {
     @Column(nullable = false)
     private String identificador;
 
-    @ManyToOne
-    @JoinColumn(name = "conductor_id", referencedColumnName = "idUsuario", nullable = false)
+    @Column(name = "conductor_id", nullable = false)
+    private UUID conductorId;
+
+    @Transient
     private Conductor conductor;
 
     @Column(nullable = false)
@@ -38,9 +40,9 @@ public class Vehiculo {
 
     public Vehiculo() {}
 
-    public Vehiculo(String identificador, Conductor conductor, int capacidad) {
+    public Vehiculo(String identificador, UUID conductorId, int capacidad) {
         this.identificador = identificador;
-        this.conductor = conductor;
+        this.conductorId = conductorId;
         this.capacidad = capacidad;
         this.asientosOcupados = 0;
     }
@@ -59,6 +61,14 @@ public class Vehiculo {
 
     public void setIdentificador(String identificador) {
         this.identificador = identificador;
+    }
+
+    public UUID getConductorId() {
+        return conductorId;
+    }
+
+    public void setConductorId(UUID conductorId) {
+        this.conductorId = conductorId;
     }
 
     public Conductor getConductor() {

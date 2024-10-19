@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 import java.time.LocalDate;
+import java.util.UUID;
 
 @Entity
 @Table(name = "clientes")
@@ -22,6 +23,8 @@ public class Cliente extends Usuario {
     public Cliente(String nombre, LocalDate fechaNacimiento, String primerApellido, String segundoApellido, String telefono, String dni) {
         super(nombre, fechaNacimiento, primerApellido, segundoApellido, telefono, dni);
     }
+
+
 
     @Override
     public String toString() {

@@ -1,6 +1,5 @@
 package com.transporte.transporte.ventas.models;
 
-import com.transporte.transporte.users.models.Cliente;
 import jakarta.persistence.*;
 import java.util.UUID;
 
@@ -12,22 +11,52 @@ public class Venta {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID codigoVenta;
 
-    @ManyToOne
-    @JoinColumn(name = "salida_id", nullable = false)
-    private Salida salida;
+    @Column(name = "salida_id", nullable = false)
+    private UUID salidaId;
 
-    @ManyToOne
-    @JoinColumn(name = "cliente_id", referencedColumnName = "idUsuario", nullable = false)
-    private Cliente cliente;
+    @Column(name = "cliente_id", nullable = false)
+    private UUID clienteId;
 
-    @ManyToOne
-    @JoinColumn(name = "servicio_id", nullable = false)
-    private Servicio servicio;
+    @Column(name = "servicio_id", nullable = false)
+    private UUID servicioId;
 
     @Column(nullable = false)
     private int asiento;
 
     public Venta() {}
 
-    // Getters and Setters
+    public Venta(UUID salidaId, UUID clienteId, UUID servicioId, int asiento) {
+        this.salidaId = salidaId;
+        this.clienteId = clienteId;
+        this.servicioId = servicioId;
+        this.asiento = asiento;
+    }
+
+    public UUID getSalidaId() {
+        return salidaId;
+    }
+
+    public UUID getServicioId() {
+        return servicioId;
+    }
+
+    public void setClienteId(UUID clienteId) {
+        this.clienteId = clienteId;
+    }
+
+    public UUID getClienteId() {
+        return clienteId;
+    }
+
+    public void setCodigoVenta(UUID codigoVenta) {
+        this.codigoVenta = codigoVenta;
+    }
+
+    public UUID getCodigoVenta() {
+        return codigoVenta;
+    }
+
+    public int getAsiento() {
+        return asiento;
+    }
 }
