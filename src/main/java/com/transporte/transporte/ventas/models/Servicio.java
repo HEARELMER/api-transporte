@@ -1,10 +1,7 @@
 package com.transporte.transporte.ventas.models;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
+
 import java.util.UUID;
 
 @Entity
@@ -14,16 +11,14 @@ public class Servicio {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID id;
-
-    public enum TipoServicio { VIP, EJECUTIVO, REAL, NORMAL }
-
-    private TipoServicio tipo;
+    @Column(name = "ruta_id", nullable = false)
+    private UUID rutaId;
     private double tarifa;
 
     public Servicio() {}
 
-    public Servicio(TipoServicio tipo, double tarifa) {
-        this.tipo = tipo;
+    public Servicio(UUID rutaId, double tarifa) {
+        this.rutaId = rutaId;
         this.tarifa = tarifa;
     }
 
@@ -35,12 +30,12 @@ public class Servicio {
         this.id = id;
     }
 
-    public TipoServicio getTipo() {
-        return tipo;
+    public UUID getRutaId() {
+        return rutaId;
     }
 
-    public void setTipo(TipoServicio tipo) {
-        this.tipo = tipo;
+    public void setRutaId(UUID rutaId) {
+        this.rutaId = rutaId;
     }
 
     public double getTarifa() {
@@ -50,4 +45,5 @@ public class Servicio {
     public void setTarifa(double tarifa) {
         this.tarifa = tarifa;
     }
+
 }

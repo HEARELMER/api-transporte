@@ -1,6 +1,7 @@
 package com.transporte.transporte.ventas.services;
 
 import com.transporte.transporte.ventas.models.Salida;
+import com.transporte.transporte.ventas.repositories.RutaRepository;
 import com.transporte.transporte.ventas.repositories.SalidaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,11 +16,14 @@ public class SalidaService {
     @Autowired
     private SalidaRepository salidaRepository;
 
+    @Autowired
+    private RutaRepository rutaRepository;
+
     public List<Salida> findAll() {
         return salidaRepository.findAll();
     }
 
-    public Optional<Salida> findById(UUID id) {
+ public Optional<Salida> findById(UUID id) {
         return salidaRepository.findById(id);
     }
 

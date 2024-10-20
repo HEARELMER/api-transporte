@@ -1,7 +1,9 @@
 package com.transporte.transporte.ventas.services;
 
 import com.transporte.transporte.ventas.dtos.VentaDetailsDto;
+import com.transporte.transporte.ventas.models.Servicio;
 import com.transporte.transporte.ventas.models.Venta;
+import com.transporte.transporte.ventas.repositories.ServicioRepository;
 import com.transporte.transporte.ventas.repositories.VentaRepository;
 import com.transporte.transporte.users.models.Cliente;
 import com.transporte.transporte.users.repositories.ClienteRepository;
@@ -22,12 +24,15 @@ public class VentaService {
     @Autowired
     private ClienteRepository clienteRepository;
 
+    @Autowired
+    private ServicioRepository servicioRepository;
+
     public Venta createVenta(Venta venta, Cliente cliente) {
         if (cliente.getIdUsuario() == null) {
             cliente.setIdUsuario(UUID.randomUUID());
         }
         cliente = clienteRepository.save(cliente);
-        venta.setClienteId(cliente.getIdUsuario()); // Set the clienteId in venta
+        venta.setClienteId(cliente.getIdUsuario());
 
         if (venta.getSalidaId() == null) {
             throw new IllegalArgumentException("SalidaId cannot be null");
@@ -37,11 +42,21 @@ public class VentaService {
             throw new IllegalArgumentException("ServicioId cannot be null");
         }
 
+
+        Optional<Servicio> servicioOpt = servicioRepository.findById(venta.getServicioId());
+        if (!servicioOpt.isPresent()) {
+            throw new IllegalArgumentException("Servicio not found for id: " + venta.getServicioId());
+        }
+        Servicio servicio = servicioOpt.get();
+        venta.setPrecio(servicio.getTarifa());
+
         return ventaRepository.save(venta);
     }
+
     public List<Venta> getAllVentas() {
         return ventaRepository.findAll();
     }
+
     public List<VentaDetailsDto> getAllVentaDetails() {
         List<Venta> ventas = ventaRepository.findAll();
         return ventas.stream().map(venta -> {

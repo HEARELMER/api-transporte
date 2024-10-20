@@ -23,13 +23,17 @@ public class Venta {
     @Column(nullable = false)
     private int asiento;
 
+    @Column(nullable = false)
+    private double precio;
+
     public Venta() {}
 
-    public Venta(UUID salidaId, UUID clienteId, UUID servicioId, int asiento) {
+   public Venta(UUID salidaId, UUID clienteId, UUID servicioId, int asiento, double precio) {
         this.salidaId = salidaId;
         this.clienteId = clienteId;
         this.servicioId = servicioId;
         this.asiento = asiento;
+        this.precio = precio;
     }
 
     public UUID getSalidaId() {
@@ -58,5 +62,13 @@ public class Venta {
 
     public int getAsiento() {
         return asiento;
+    }
+
+    public double getPrecio() {
+        return precio;
+    }
+
+    public void setPrecio(double precio) {
+        this.precio = precio;
     }
 }
